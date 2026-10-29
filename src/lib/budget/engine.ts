@@ -188,7 +188,7 @@ export function autoAssign(state: BudgetState, month: MonthKey): Record<string, 
     .sort((a, b) => (groupOrder.get(a.groupId)! - groupOrder.get(b.groupId)!) || a.order - b.order);
   for (const cat of cats) {
     if (left <= 0) break;
-    const need = targetNeed(cat, s.rows[cat.id], month);
+    const need = targetNeed(cat, s.rows[cat.id]!, month);
     const give = Math.min(need, left);
     if (give > 0) {
       next[cat.id] = (next[cat.id] ?? 0) + give;
@@ -295,7 +295,7 @@ export function ageOfMoney(state: BudgetState): number | null {
       let weighted = 0;
       const total = need;
       while (need > 0 && queue.length) {
-        const q = queue[0];
+        const q = queue[0]!;
         const take = Math.min(q.left, need);
         weighted += take * daysBetween(q.date, t.date);
         q.left -= take;

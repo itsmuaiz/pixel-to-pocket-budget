@@ -19,7 +19,7 @@ export function TabBar() {
           return (
             <Link
               key={to}
-              to={to}
+              to={to as "/"}
               aria-current={active ? "page" : undefined}
               className={cn("press flex flex-1 flex-col items-center gap-0.5 pt-2 text-[10px] font-medium", active ? "text-primary" : "text-muted-foreground")}
             >
