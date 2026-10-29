@@ -12,7 +12,7 @@ export interface Account {
   name: string;
   type: AccountType;
   onBudget: boolean;
-  closed?: boolean;
+  closed?: boolean | undefined;
   createdAt: ISODate;
 }
 
@@ -20,8 +20,8 @@ export interface CategoryGroup {
   id: string;
   name: string;
   order: number;
-  collapsed?: boolean;
-  system?: boolean;
+  collapsed?: boolean | undefined;
+  system?: boolean | undefined;
 }
 
 export type TargetType = "monthly" | "byDate" | "need" | "fill";
@@ -30,9 +30,9 @@ export interface Target {
   type: TargetType;
   amount: Cents;
   /** for byDate */
-  date?: ISODate;
+  date?: ISODate | undefined;
   /** for need */
-  cadence?: "weekly" | "monthly";
+  cadence?: "weekly" | "monthly" | undefined;
 }
 
 export interface Category {
@@ -40,18 +40,18 @@ export interface Category {
   groupId: string;
   name: string;
   order: number;
-  hidden?: boolean;
-  target?: Target;
+  hidden?: boolean | undefined;
+  target?: Target | undefined;
   /** set for auto-created credit card payment categories */
-  creditAccountId?: string;
+  creditAccountId?: string | undefined;
 }
 
 export const INCOME = "income";
 
 export interface SplitLine {
-  categoryId?: string; // category id or INCOME
+  categoryId?: string | undefined; // category id or INCOME
   amount: Cents;
-  memo?: string;
+  memo?: string | undefined;
 }
 
 export interface Transaction {
@@ -59,14 +59,14 @@ export interface Transaction {
   accountId: string;
   date: ISODate;
   payee: string;
-  memo?: string;
+  memo?: string | undefined;
   amount: Cents;
   cleared: boolean;
-  categoryId?: string; // category id or INCOME; ignored when splits present
-  splits?: SplitLine[];
-  transferAccountId?: string;
-  transferPairId?: string;
-  recurringId?: string;
+  categoryId?: string | undefined; // category id or INCOME; ignored when splits present
+  splits?: SplitLine[] | undefined;
+  transferAccountId?: string | undefined;
+  transferPairId?: string | undefined;
+  recurringId?: string | undefined;
 }
 
 export type Frequency = "weekly" | "monthly" | "yearly";

@@ -10,17 +10,17 @@ export function toISO(d: Date): ISODate {
   return `${d.getFullYear()}-${m}-${day}`;
 }
 export function parseISO(s: ISODate): Date {
-  const [y, m, d] = s.split("-").map(Number);
+  const [y, m, d] = s.split("-").map(Number) as [number, number, number];
   return new Date(y, m - 1, d);
 }
 export function addMonths(key: MonthKey, n: number): MonthKey {
-  const [y, m] = key.split("-").map(Number);
+  const [y, m] = key.split("-").map(Number) as [number, number, number];
   const d = new Date(y, m - 1 + n, 1);
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
 }
 export function monthDiff(a: MonthKey, b: MonthKey): number {
-  const [ay, am] = a.split("-").map(Number);
-  const [by, bm] = b.split("-").map(Number);
+  const [ay, am] = a.split("-").map(Number) as [number, number, number];
+  const [by, bm] = b.split("-").map(Number) as [number, number, number];
   return (by - ay) * 12 + (bm - am);
 }
 /** Budget month for a date, honoring the configured first day of month. */
@@ -33,7 +33,7 @@ export function currentMonth(firstDay = 1): MonthKey {
   return budgetMonth(todayISO(), firstDay);
 }
 export function monthLabel(key: MonthKey, style: "long" | "short" = "long"): string {
-  const [y, m] = key.split("-").map(Number);
+  const [y, m] = key.split("-").map(Number) as [number, number, number];
   return new Date(y, m - 1, 1).toLocaleDateString("en-GB", { month: style, year: style === "long" ? "numeric" : "2-digit" });
 }
 export function formatDate(d: ISODate): string {
@@ -48,7 +48,7 @@ export function advance(date: ISODate, f: Frequency): ISODate {
 }
 /** Number of a given weekday occurrences in month (used for weekly needs: counts Mondays). */
 export function weeksInMonth(key: MonthKey): number {
-  const [y, m] = key.split("-").map(Number);
+  const [y, m] = key.split("-").map(Number) as [number, number, number];
   let n = 0;
   const d = new Date(y, m - 1, 1);
   while (d.getMonth() === m - 1) {
