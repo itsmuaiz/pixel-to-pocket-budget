@@ -8,7 +8,7 @@ import { formatPlain, parseAmount } from "@/lib/budget/money";
 import { todayISO } from "@/lib/budget/dates";
 import { INCOME, type BudgetState, type Frequency, type Transaction } from "@/lib/budget/types";
 
-export function TransactionSheet({ state, accountId, transaction, open, onClose }: { state: BudgetState; accountId: string; transaction?: Transaction; open: boolean; onClose: () => void }) {
+export function TransactionSheet({ state, accountId, transaction, open, onClose }: { state: BudgetState; accountId: string; transaction?: Transaction | undefined; open: boolean; onClose: () => void }) {
   const [amount, setAmount] = useState(transaction ? formatPlain(Math.abs(transaction.amount)) : "");
   const [direction, setDirection] = useState<"outflow" | "inflow">((transaction?.amount ?? -1) > 0 ? "inflow" : "outflow");
   const [payee, setPayee] = useState(transaction?.payee ?? "");
