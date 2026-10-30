@@ -19,9 +19,9 @@ export function TabBar() {
           return (
             <Link
               key={to}
-              to={to as "/"}
+              to={to}
               aria-current={active ? "page" : undefined}
-              className={cn("press flex flex-1 flex-col items-center gap-0.5 pt-2 text-[10px] font-medium", active ? "text-primary" : "text-muted-foreground")}
+              className={cn("press flex min-h-14 flex-1 flex-col items-center gap-0.5 pt-2 text-[10px] font-medium", active ? "text-primary" : "text-muted-foreground")}
             >
               <Icon className="size-6" strokeWidth={active ? 2.3 : 1.8} />
               {label}

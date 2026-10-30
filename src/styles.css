@@ -170,6 +170,11 @@
 @utility large-title { font-size: 2.125rem; line-height: 1.15; font-weight: 700; letter-spacing: 0; }
 
 .budget-columns { display: grid; grid-template-columns: minmax(0, 1fr) 88px 88px 100px; }
+.report-color-0 { background: var(--chart-1); }
+.report-color-1 { background: var(--chart-2); }
+.report-color-2 { background: var(--chart-3); }
+.report-color-3 { background: var(--chart-4); }
+.report-color-4 { background: var(--chart-5); }
 @media (max-width: 480px) { .budget-columns { grid-template-columns: minmax(0, 1fr) 67px 66px 84px; } }
 @media (max-width: 360px) { .budget-columns { grid-template-columns: minmax(0, 1fr) 57px 57px 76px; } }
 
