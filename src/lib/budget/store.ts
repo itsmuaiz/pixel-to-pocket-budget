@@ -226,7 +226,10 @@ export const actions = {
       const old = s.transactions.find((x) => x.id === id);
       const rest = s.transactions.filter((x) => x.id !== id && x.id !== old?.transferPairId);
       const built = buildTransfer(t, s);
-      built[0].id = id;
+      const first = built[0];
+      if (!first) return s;
+      first.id = id;
+      if (built[1]) built[1].transferPairId = id;
       return { ...s, transactions: [...rest, ...built] };
     });
   },
@@ -287,9 +290,13 @@ export const actions = {
       const i = siblings.findIndex((c) => c.id === id);
       const j = i + dir;
       if (j < 0 || j >= siblings.length) return s;
-      [siblings[i], siblings[j]] = [siblings[j], siblings[i]];
+      const current = siblings[i];
+      const neighbor = siblings[j];
+      if (!current || !neighbor) return s;
+      siblings[i] = neighbor;
+      siblings[j] = current;
       const order = new Map(siblings.map((c, k) => [c.id, k]));
-      return { ...s, categories: s.categories.map((c) => (order.has(c.id) ? { ...c, order: order.get(c.id)! } : c)) };
+      return { ...s, categories: s.categories.map((c) => ({ ...c, order: order.get(c.id) ?? c.order })) };
     });
   },
 
@@ -314,7 +321,11 @@ export function sampleState(): BudgetState {
   const checking: Account = { id: uid(), name: "ING Checking", type: "checking", onBudget: true, createdAt: today };
   const savings: Account = { id: uid(), name: "Savings", type: "savings", onBudget: true, createdAt: today };
   s.accounts = [checking, savings];
-  const byName = (n: string) => s.categories.find((c) => c.name === n)!.id;
+  const byName = (n: string) => {
+    const category = s.categories.find((c) => c.name === n);
+    if (!category) throw new Error(`Missing sample category: ${n}`);
+    return category.id;
+  };
   const d = (day: number) => `${month}-${String(Math.min(day, Number(today.slice(8)))).padStart(2, "0")}`;
   const tx = (p: Partial<Transaction> & { amount: number; payee: string }): Transaction => ({
     id: uid(),

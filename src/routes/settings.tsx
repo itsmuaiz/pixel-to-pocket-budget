@@ -1,0 +1,3 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { SettingsScreen } from "@/components/app/SettingsScreen";
+export const Route = createFileRoute("/settings")({ head: () => ({ meta: [{ title: "Settings · Budgetly" }, { name: "description", content: "Personalize Budgetly, manage your local budget and import or export transactions." }, { property: "og:title", content: "Settings · Budgetly" }, { property: "og:description", content: "Appearance, budget settings and CSV import and export." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }), component: SettingsScreen });

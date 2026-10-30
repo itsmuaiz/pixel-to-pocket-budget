@@ -1,0 +1,3 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { ReportsScreen } from "@/components/app/ReportsScreen";
+export const Route = createFileRoute("/reports")({ head: () => ({ meta: [{ title: "Reports · Budgetly" }, { name: "description", content: "Explore spending, income, net worth and Age of Money in Budgetly." }, { property: "og:title", content: "Reports · Budgetly" }, { property: "og:description", content: "A clear picture of where your money goes." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }), component: ReportsScreen });

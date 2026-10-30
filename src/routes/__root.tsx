@@ -12,6 +12,9 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { TabBar } from "@/components/app/TabBar";
+import { useBudget } from "@/lib/budget/store";
+import { Toaster } from "sonner";
 
 function NotFoundComponent() {
   return (
@@ -78,14 +81,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Budgetly" },
+      { name: "description", content: "A local-first, zero-based euro budget." },
+      { property: "og:title", content: "Budgetly" },
+      { property: "og:description", content: "Give every euro a job." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
@@ -122,6 +123,19 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
+      <AppChrome />
     </QueryClientProvider>
   );
+}
+
+function AppChrome() {
+  const budget = useBudget();
+  const appearance = budget?.settings.appearance ?? "system";
+  useEffect(() => {
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    const apply = () => document.documentElement.classList.toggle("dark", appearance === "dark" || (appearance === "system" && media.matches));
+    apply(); media.addEventListener("change", apply);
+    return () => media.removeEventListener("change", apply);
+  }, [appearance]);
+  return <><TabBar /><Toaster position="top-center" richColors /></>;
 }
