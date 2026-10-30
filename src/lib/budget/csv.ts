@@ -58,9 +58,10 @@ function parseRow(line: string, sep: string): string[] {
 /** Imports rows into the given account. Matches categories by name. Returns new transactions. */
 export function importCSV(text: string, state: BudgetState, accountId: string): Omit<Transaction, "id">[] {
   const rows = text.split(/\r?\n/).filter((l) => l.trim());
-  if (!rows.length) return [];
-  const sep = rows[0].includes(";") && !rows[0].includes(",") ? ";" : ",";
-  const head = parseRow(rows[0], sep).map((h) => h.trim().toLowerCase());
+  const first = rows[0];
+  if (!first) return [];
+  const sep = first.includes(";") && !first.includes(",") ? ";" : ",";
+  const head = parseRow(first, sep).map((h) => h.trim().toLowerCase());
   const idx = (n: string) => head.indexOf(n);
   const catByName = new Map(state.categories.map((c) => [c.name.toLowerCase(), c.id]));
   const out: Omit<Transaction, "id">[] = [];
